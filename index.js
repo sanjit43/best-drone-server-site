@@ -21,8 +21,24 @@ async function run() {
         await client.connect()
         const database = client.db('droneDB');
         const productCollection = database.collection('products')
+        const ordersCollection = database.collection('orders')
 
 
+
+        //POST API 
+        app.post('/orders', async (req, res) => {
+            const orders = req.body
+            const result = await ordersCollection.insertOne(orders)
+            console.log(result)
+            res.json(result)
+        })
+
+        //GET Orders Api
+        app.get('/orders', async (req, res) => {
+            const cursor = ordersCollection.find({})
+            const result = await cursor.toArray();
+            res.send(result)
+        })
         //GET API
         app.get('/products', async (req, res) => {
             const cursor = productCollection.find({})
