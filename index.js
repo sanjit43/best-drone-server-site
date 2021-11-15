@@ -23,6 +23,7 @@ async function run() {
         const database = client.db('droneDB');
         const productCollection = database.collection('products')
         const ordersCollection = database.collection('orders')
+        const reviewCollection = database.collection('reviews')
 
 
 
@@ -34,9 +35,6 @@ async function run() {
             res.json(result)
         })
 
-
-
-
         //GET Orders Api
         app.get('/orders', async (req, res) => {
             const email = req.query.email;
@@ -46,6 +44,20 @@ async function run() {
             res.json(orders)
         })
 
+        //Post Review APi
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewCollection.insertOne(review)
+            res.json(result)
+        })
+
+
+        //Get Review Api
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewCollection.find({})
+            const result = await cursor.toArray()
+            res.json(result)
+        })
 
         //GET API
         app.get('/products', async (req, res) => {
