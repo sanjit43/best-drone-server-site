@@ -54,7 +54,7 @@ async function run() {
         })
 
         //GET SPECIFIC ADMIN BY EMAIL
-        app.get('users/:email', async (req, res) => {
+        app.get('/users/:email', async (req, res) => {
             const email = req.params.email
             const query = { email: email }
             const user = await userCollection.findOne(query)
