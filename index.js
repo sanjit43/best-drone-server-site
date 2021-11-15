@@ -44,6 +44,15 @@ async function run() {
             res.json(result)
         })
 
+        //Make Admin
+        app.put('/users/admin', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email }
+            const updateDoc = { $set: { role: 'admin' } }
+            const result = await userCollection.updateOne(filter, updateDoc);
+            res.json(result)
+        })
+
         //GET USERS API
         app.get('/users', async (req, res) => {
             const cursor = userCollection.find({});
