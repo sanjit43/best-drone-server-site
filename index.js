@@ -26,7 +26,7 @@ async function run() {
 
 
 
-        //POST API 
+        //POST Orders API 
         app.post('/orders', async (req, res) => {
             const orders = req.body
             const result = await ordersCollection.insertOne(orders)
@@ -39,10 +39,13 @@ async function run() {
 
         //GET Orders Api
         app.get('/orders', async (req, res) => {
-            const cursor = ordersCollection.find({})
+            const email = req.query.email;
+            const query = { email: email }
+            const cursor = ordersCollection.find(query)
             const orders = await cursor.toArray()
             res.json(orders)
         })
+
 
         //GET API
         app.get('/products', async (req, res) => {
